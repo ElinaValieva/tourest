@@ -1,8 +1,11 @@
-provider "google" {}
+provider "google" {
+  project = var.project_id
+  region  = var.region
+  zone    = var.zone
+}
 
 resource "google_cloudbuild_trigger" "cloud-build-trigger" {
   name        = "cloud-build-trigger"
-  project     = var.project_id
   location    = var.region
   description = "CI trigger for deploying to GCP"
   tags        = ["gcp", "cloud_build", var.cloud_run_name]
