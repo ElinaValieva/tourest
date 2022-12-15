@@ -1,7 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/gcp-playground-06071995/github.com/elinavalieva/gcp_playground_system:$SHORT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/${_PROJECT}/github.com/elinavalieva/gcp_playground_system:$SHORT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/gcp-playground-06071995/github.com/elinavalieva/gcp_playground_system:$SHORT_SHA']
+  args: ['push', 'gcr.io/${_PROJECT}/github.com/elinavalieva/gcp_playground_system:$SHORT_SHA']
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'gcp-playground-system', '--region=us-central1', '--platform=managed', '--image=gcr.io/gcp-playground-06071995/github.com/elinavalieva/gcp_playground_system:$SHORT_SHA']
+  args: ['run', 'deploy', 'gcp-playground-system', '--region=us-central1', '--platform=managed', '--image=gcr.io/${_PROJECT}/github.com/elinavalieva/gcp_playground_system:$SHORT_SHA']
