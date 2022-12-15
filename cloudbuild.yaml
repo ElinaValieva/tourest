@@ -1,7 +1,23 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA', '.']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA']
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', '${_APP}', '--region=${_REGION}', '--platform=managed', '--image=gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA']
+  - id: 'tf init/plan/apply'
+    name: 'hashicorp/terraform:1.0.0'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        cd terraform
+        terraform init
+        terraform plan
+        terraform apply -auto-approve
+
+  - id: 'build image'
+    name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA', '.' ]
+
+  - id: 'push image to artifactory'
+    name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA' ]
+
+  - id: 'cloud run deploy'
+    name: 'gcr.io/cloud-builders/gcloud'
+    args: [ 'run', 'deploy', '${_APP}', '--region=${_REGION}', '--platform=managed', '--image=gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA' ]
