@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', '${_APP}', '--region=${_REGION}', '--platform=managed', '--image=gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA']
