@@ -1,15 +1,4 @@
 steps:
-  - id: 'tf init/plan/apply'
-    name: 'hashicorp/terraform:1.0.0'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        cd terraform/common
-        terraform init
-        terraform plan
-        terraform apply -auto-approve
-
   - id: 'build image'
     name: 'gcr.io/cloud-builders/docker'
     args: [ 'build', '-t', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA', '.' ]

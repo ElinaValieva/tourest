@@ -1,9 +1,3 @@
-provider "google" {
-  project = var.project_id
-  region  = var.region
-  zone    = var.zone
-}
-
 resource "google_cloudbuild_trigger" "cloud-build-trigger" {
   name        = "cloud-build-trigger"
   location    = var.region

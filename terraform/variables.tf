@@ -33,3 +33,9 @@ variable "cloud_run_name" {
   default     = "gcp-playground-system"
   type        = string
 }
+
+variable "bucket_reference" {
+  description = "Bucket name for images"
+  default     = "tourest_bucket"
+  type        = string
+}
