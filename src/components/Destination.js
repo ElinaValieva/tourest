@@ -24,7 +24,7 @@ const cardInfo = [
     {
         title: "Maldives",
         text: "Malé",
-        url: "/assets/images/destination-1.jpeg",
+        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-1.jpeg",
         height: 1100,
         width: 1140,
         class: "w-50"
@@ -32,7 +32,7 @@ const cardInfo = [
     {
         title: "Thailand",
         text: "Bangkok",
-        url: "/assets/images/destination-2.jpeg",
+        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-2.jpeg",
         height: 1100,
         width: 1140,
         class: "w-50"
@@ -40,7 +40,7 @@ const cardInfo = [
     {
         title: "Malaysia",
         text: "Kuala Lumpur",
-        url: "/assets/images/destination-3.jpeg",
+        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-3.jpeg",
         height: 1100,
         width: 480,
         class: ""
@@ -48,7 +48,7 @@ const cardInfo = [
     {
         title: "Nepal",
         text: "Kathmandu",
-        url: "/assets/images/destination-4.jpeg",
+        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-4.jpeg",
         height: 1100,
         width: 480,
         class: ""
@@ -56,7 +56,7 @@ const cardInfo = [
     {
         title: "Indonesia",
         text: "Jakarta",
-        url: "/assets/images/destination-5.jpeg",
+        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-5.jpeg",
         height: 1100,
         width: 480,
         class: ""

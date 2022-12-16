@@ -15,3 +15,9 @@ variable "region" {
   default     = "us-central1"
   type        = string
 }
+
+variable "bucket_reference" {
+  description = "Bucket name for images"
+  default     = "tourest_bucket"
+  type        = string
+}

@@ -49,28 +49,28 @@ const BlogCard = ({cards}) => (
 
 const popularCards = [
     {
-        source: '/assets/images/popular-1.jpeg',
+        source: 'https://storage.googleapis.com/tourest_bucket_xxx/popular-1.jpeg',
         publishedDay: '04 Dec',
         publishedTime: '10:30 AM',
-        avatar: '/assets/images/author-avatar.png',
+        avatar: 'https://storage.googleapis.com/tourest_bucket_xxx/author-avatar.png',
         author: 'Jony bristow',
         surname: 'Admin',
         title: 'A good traveler has no fixed plans and is not intent on arriving.'
     },
     {
-        source: '/assets/images/popular-2.jpeg',
+        source: 'https://storage.googleapis.com/tourest_bucket_xxx/popular-2.jpeg',
         publishedDay: '05 Dec',
         publishedTime: '10:35 AM',
-        avatar: '/assets/images/author-avatar.png',
+        avatar: 'https://storage.googleapis.com/tourest_bucket_xxx/author-avatar.png',
         author: 'Jony bristow',
         surname: 'Admin',
         title: 'A good traveler has no fixed plans and is not intent on arriving.'
     },
     {
-        source: '/assets/images/popular-3.jpeg',
+        source: 'https://storage.googleapis.com/tourest_bucket_xxx/popular-3.jpeg',
         publishedDay: '04 Dec',
         publishedTime: '12:30 AM',
-        avatar: '/assets/images/author-avatar.png',
+        avatar: 'https://storage.googleapis.com/tourest_bucket_xxx/author-avatar.png',
         author: 'Jony bristow',
         surname: 'Admin',
         title: 'A good traveler has no fixed plans and is not intent on arriving.'
