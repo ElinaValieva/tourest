@@ -1,8 +1,41 @@
 import {Component} from "react";
 
+const HeaderMenu = ({links}) => (
+    <ul className="navbar-list">
+        {links.map((link) => (
+            <li>
+                <a href={link.href} className="navbar-link">{link.name}</a>
+            </li>
+        ))}
+    </ul>
+)
+
+const links = [
+    {
+        name: 'Home',
+        href: '#'
+    },
+    {
+        name: 'About Us',
+        href: '#'
+    },
+    {
+        name: 'Destinations',
+        href: '#'
+    },
+    {
+        name: 'Blog',
+        href: '#'
+    },
+    {
+        name: 'Contact Us',
+        href: '#'
+    }
+]
+
 export class Header extends Component {
     render() {
-        return(
+        return (
             <header className="header">
                 <div className="container">
                     <a href="#">
@@ -13,23 +46,7 @@ export class Header extends Component {
                         <ion-icon name="close-outline" className="close"></ion-icon>
                     </button>
                     <nav className="navbar">
-                        <ul className="navbar-list">
-                            <li>
-                                <a href="#" className="navbar-link">Home</a>
-                            </li>
-                            <li>
-                                <a href="#" className="navbar-link">About Us</a>
-                            </li>
-                            <li>
-                                <a href="#" className="navbar-link">Destinations</a>
-                            </li>
-                            <li>
-                                <a href="#" className="navbar-link">Blog</a>
-                            </li>
-                            <li>
-                                <a href="#" className="navbar-link">Contact Us</a>
-                            </li>
-                        </ul>
+                        <HeaderMenu links={links}/>
                         <a href="#" className="btn btn-secondary">Share your tour Now</a>
                     </nav>
                 </div>

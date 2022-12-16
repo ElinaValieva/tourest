@@ -1,73 +1,45 @@
 import {Component} from "react";
 import {BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsGoogle} from "react-icons/bs"
+
+const FooterList = ({header, descriptions}) => (
+    <ul className="footer-list">
+        <li>
+            <p className="footer-list-title">{header}</p>
+        </li>
+        {descriptions.map((description) => (
+            <li>
+                <a href="#" className="footer-link">{description}</a>
+            </li>
+        ))}
+    </ul>
+)
+
 export class Footer extends Component {
     render() {
         return (
             <footer className="footer">
                 <div className="container">
                     <div className="footer-top">
-                        <ul className="footer-list">
-                            <li>
-                                <p className="footer-list-title">Top destination</p>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Indonesia, Jakarta</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Maldives, Malé</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Australia, Canberra</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Thailand, Bangkok</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Morocco, Rabat</a>
-                            </li>
-                        </ul>
+                        <FooterList header={'Top destination'} descriptions={[
+                            'Indonesia, Jakarta',
+                            'Maldives, Malé',
+                            'Australia, Canberra',
+                            'Thailand, Bangkok',
+                            'Morocco, Rabat']}/>
 
-                        <ul className="footer-list">
-                            <li>
-                                <p className="footer-list-title">Categories</p>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Travel</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Lifestyle</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Fashion</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Education</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Food & Drink</a>
-                            </li>
-                        </ul>
+                        <FooterList header={'Categories'} descriptions={[
+                            'Travel',
+                            'Lifestyle',
+                            'Fashion',
+                            'Education',
+                            'Food & Drink']}/>
 
-                        <ul className="footer-list">
-                            <li>
-                                <p className="footer-list-title">Quick links</p>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">About</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Contact</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Tours</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Booking</a>
-                            </li>
-                            <li>
-                                <a href="#" className="footer-link">Terms & Conditions</a>
-                            </li>
-                        </ul>
+                        <FooterList header={'Quick links'} descriptions={[
+                            'About',
+                            'Contact',
+                            'Tours',
+                            'Booking',
+                            'Terms & Conditions']}/>
 
                         <div className="footer-list">
                             <p className="footer-list-title">Get a newsletter</p>
@@ -90,35 +62,24 @@ export class Footer extends Component {
                         </p>
 
                         <ul className="social-list">
-
                             <li>
-                                <a href="#" className="social-link">
-                                    <BsFacebook/>
-                                </a>
+                                <a href="#" className="social-link"><BsFacebook/></a>
                             </li>
 
                             <li>
-                                <a href="#" className="social-link">
-                                    <BsTwitter/>
-                                </a>
+                                <a href="#" className="social-link"><BsTwitter/></a>
                             </li>
 
                             <li>
-                                <a href="#" className="social-link">
-                                    <BsInstagram/>
-                                </a>
+                                <a href="#" className="social-link"><BsInstagram/></a>
                             </li>
 
                             <li>
-                                <a href="#" className="social-link">
-                                    <BsLinkedin/>
-                                </a>
+                                <a href="#" className="social-link"><BsLinkedin/></a>
                             </li>
 
                             <li>
-                                <a href="#" className="social-link">
-                                    <BsGoogle/>
-                                </a>
+                                <a href="#" className="social-link"><BsGoogle/></a>
                             </li>
                         </ul>
                     </div>
