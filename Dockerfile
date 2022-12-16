@@ -1,7 +1,18 @@
-FROM python:3.10-slim
-ENV PYTHONUNBUFFERED True
-ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY . ./
-RUN pip install --no-cache-dir -r requirements.txt
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app
+# Build Frontend Assets
+FROM node:18-alpine as build
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Serve Frontend Assets
+FROM fholzer/nginx-brotli:v1.12.2
+
+WORKDIR /etc/nginx
+ADD nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 443
+CMD ["nginx", "-g", "daemon off;"]
