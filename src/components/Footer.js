@@ -3,11 +3,11 @@ import {BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsGoogle} from "react-ic
 
 const FooterList = ({header, descriptions}) => (
     <ul className="footer-list">
-        <li>
+        <li key={header}>
             <p className="footer-list-title">{header}</p>
         </li>
         {descriptions.map((description) => (
-            <li>
+            <li key={description}>
                 <a href="#" className="footer-link">{description}</a>
             </li>
         ))}

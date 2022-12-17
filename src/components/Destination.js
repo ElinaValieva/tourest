@@ -3,7 +3,7 @@ import {Component} from "react";
 const Countries = ({countries}) => (
     <ul className="destination-list">
         {countries.map((country) => (
-            <li className={country.class}>
+            <li className={country.class} key={country.id}>
                 <a href="#" className="destination-card">
                     <figure className="card-banner">
                         <img src={country.url} width={country.width} height={country.height}
@@ -22,6 +22,7 @@ const Countries = ({countries}) => (
 
 const cardInfo = [
     {
+        id: 1,
         title: "Maldives",
         text: "Malé",
         url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-1.jpeg",
@@ -30,6 +31,7 @@ const cardInfo = [
         class: "w-50"
     },
     {
+        id: 2,
         title: "Thailand",
         text: "Bangkok",
         url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-2.jpeg",
@@ -38,6 +40,7 @@ const cardInfo = [
         class: "w-50"
     },
     {
+        id: 3,
         title: "Malaysia",
         text: "Kuala Lumpur",
         url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-3.jpeg",
@@ -46,6 +49,7 @@ const cardInfo = [
         class: ""
     },
     {
+        id: 4,
         title: "Nepal",
         text: "Kathmandu",
         url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-4.jpeg",
@@ -54,6 +58,7 @@ const cardInfo = [
         class: ""
     },
     {
+        id: 5,
         title: "Indonesia",
         text: "Jakarta",
         url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-5.jpeg",

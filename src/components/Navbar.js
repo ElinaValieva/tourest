@@ -1,10 +1,11 @@
 import {Component} from "react";
+import {Link} from "react-router-dom";
 
-const HeaderMenu = ({links}) => (
+const NavbarMenu = ({links}) => (
     <ul className="navbar-list">
         {links.map((link) => (
-            <li>
-                <a href={link.href} className="navbar-link">{link.name}</a>
+            <li key={link.name}>
+                <Link to={link.href} className="navbar-link">{link.name}</Link>
             </li>
         ))}
     </ul>
@@ -13,27 +14,27 @@ const HeaderMenu = ({links}) => (
 const links = [
     {
         name: 'Home',
-        href: '#'
+        href: '/'
     },
     {
         name: 'About Us',
-        href: '#'
+        href: '/about'
     },
     {
         name: 'Destinations',
-        href: '#'
+        href: '/destination'
     },
     {
         name: 'Blog',
-        href: '#'
+        href: '/blog'
     },
     {
         name: 'Contact Us',
-        href: '#'
+        href: '/contact'
     }
 ]
 
-export class Header extends Component {
+export class Navbar extends Component {
     render() {
         return (
             <header className="header">
@@ -46,7 +47,7 @@ export class Header extends Component {
                         <ion-icon name="close-outline" className="close"></ion-icon>
                     </button>
                     <nav className="navbar">
-                        <HeaderMenu links={links}/>
+                        <NavbarMenu links={links}/>
                         <a href="#" className="btn btn-secondary">Share your tour Now</a>
                     </nav>
                 </div>

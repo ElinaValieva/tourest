@@ -4,7 +4,7 @@ import {FaBriefcase, FaCompass, FaUmbrella} from "react-icons/fa";
 const Tips = ({tips}) => (
     <ul className="about-list">
         {tips.map((tip) => (
-            <li className="about-item">
+            <li className="about-item" key={tip.title}>
                 <div className="about-item-icon">
                     {tip.component}
                 </div>

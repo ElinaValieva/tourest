@@ -3,7 +3,7 @@ import {Component} from "react";
 const BlogCard = ({cards}) => (
     <ul className="blog-list">
         {cards.map((card) => (
-        <li>
+        <li key={card.id}>
             <div className="blog-card">
                 <figure className="card-banner">
                     <a href="#">
@@ -49,6 +49,7 @@ const BlogCard = ({cards}) => (
 
 const popularCards = [
     {
+        id: 1,
         source: 'https://storage.googleapis.com/tourest_bucket_xxx/popular-1.jpeg',
         publishedDay: '04 Dec',
         publishedTime: '10:30 AM',
@@ -58,6 +59,7 @@ const popularCards = [
         title: 'A good traveler has no fixed plans and is not intent on arriving.'
     },
     {
+        id: 2,
         source: 'https://storage.googleapis.com/tourest_bucket_xxx/popular-2.jpeg',
         publishedDay: '05 Dec',
         publishedTime: '10:35 AM',
@@ -67,6 +69,7 @@ const popularCards = [
         title: 'A good traveler has no fixed plans and is not intent on arriving.'
     },
     {
+        id: 3,
         source: 'https://storage.googleapis.com/tourest_bucket_xxx/popular-3.jpeg',
         publishedDay: '04 Dec',
         publishedTime: '12:30 AM',
