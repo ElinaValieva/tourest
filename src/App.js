@@ -6,6 +6,7 @@ import {About} from "./components/About";
 import {Footer} from "./components/Footer";
 import {Blog} from "./components/Blog";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {NewTour} from "./components/NewTour";
 
 function App() {
     return (
@@ -30,6 +31,9 @@ function App() {
                             </Route>
                             <Route path="/about">
                                 <About/>
+                            </Route>
+                            <Route path="/new">
+                                <NewTour/>
                             </Route>
                         </Switch>
                     </article>

@@ -27,10 +27,6 @@ const links = [
     {
         name: 'Blog',
         href: '/blog'
-    },
-    {
-        name: 'Contact Us',
-        href: '/contact'
     }
 ]
 
@@ -48,7 +44,7 @@ export class Navbar extends Component {
                     </button>
                     <nav className="navbar">
                         <NavbarMenu links={links}/>
-                        <a href="#" className="btn btn-secondary">Share your tour Now</a>
+                        <Link to="/new" className="btn btn-secondary">Share your tour Now</Link>
                     </nav>
                 </div>
             </header>
