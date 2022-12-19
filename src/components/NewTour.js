@@ -1,5 +1,7 @@
-import {Component} from "react";
-import React from 'react';
+import React, {Component, useState} from "react";
+import {collection, doc, setDoc} from 'firebase/firestore';
+import db from '../firebase';
+import {v4 as uuidv4} from 'uuid';
 
 export class FileUploader extends Component {
 
@@ -39,50 +41,75 @@ export class FileUploader extends Component {
     }
 }
 
-export class NewTour extends Component {
+export function NewTour() {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            text: ''
-        };
+    const [title, setTitle] = useState('');
+    const [text, setText] = useState('');
+    const [loading, setLoading] = useState(false);
+    const collectionRef = collection(db, 'test');
+
+    async function addBlog() {
+        let date = new Date();
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        Date.prototype.formatTime = function () {
+            let hours = this.getHours();
+            let minutes = this.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            return hours + ':' + minutes + ' ' + ampm;
+        }
+
+        Date.prototype.formatDay = function() {
+            return this.getDay() + ' ' + monthNames[this.getMonth()] + ' ' + this.getFullYear();
+        }
+
+        const textDetail = {
+            id: uuidv4(),
+            author: 'Jony Bristow',
+            avatar: 'https://storage.googleapis.com/tourest_bucket_xxx/author-avatar.png',
+            publishedDay: date.formatDay(),
+            publishedTime: date.formatTime(),
+            source: 'https://storage.googleapis.com/tourest_bucket_xxx/popular-2.jpeg',
+            surname: 'Admin',
+            country: 'Malé',
+            city: 'Nepal',
+            title: title,
+            text: text
+        }
+
+        try {
+            setLoading(true);
+            await setDoc(doc(collectionRef), textDetail).then(() => {
+                setLoading(false);
+            });
+        } catch (error) {
+            console.error(error);
+
+        }
     }
 
-    onClick = event => {
-        event.preventDefault()
-        // return createNote({
-        //     title: 'kek',
-        //     text: 'pek'
-        // }).then((e) => {
-        //     console.log(e)
-        //     this.setState({
-        //         title: '',
-        //         text: ''
-        //     });
-        // }).catch((err) => {
-        //     console.log(err)
-        // })
-
-    }
-
-    render() {
-        return (
-            <div>
-                <div className="banner">
-                    <FileUploader/>
-                </div>
-
-                <div className="blog">
-                    <textarea className="title" value={this.state.title} placeholder="Blog title..."></textarea>
-                    <textarea className="article" value={this.state.text}
-                              placeholder="Start writing here..."></textarea>
-                </div>
-
-                <div className="about-content">
-                    <button className="btn btn-primary" onClick={this.onClick}>Share your tour Now</button>
-                </div>
+    return (
+        <div>
+            <div className="banner">
+                <FileUploader/>
             </div>
-        )
-    }
+
+            <div className="blog">
+                <textarea className="title" placeholder="Blog title..."
+                          onChange={(e) => setTitle(e.target.value)}></textarea>
+                <textarea className="article" placeholder="Start writing here..."
+                          onChange={(e) => setText(e.target.value)}></textarea>
+            </div>
+
+            <div className="about-content">
+                <button className="btn btn-primary"
+                        disabled={loading}
+                        onClick={() => addBlog()}>Share your tour Now
+                </button>
+            </div>
+        </div>
+    )
 }

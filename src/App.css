@@ -699,7 +699,7 @@ body {
 .newsletter-input {
     background: var(--white-1);
     border-radius: var(--radius-6);
-    padding: 24px;
+    padding: 12px;
     color: var(--eerie-black);
 }
 
