@@ -1,44 +1,59 @@
-import React, {Component, useState} from "react";
+import React, {useState} from "react";
 import {collection, doc, setDoc} from 'firebase/firestore';
 import db from '../firebase';
 import {v4 as uuidv4} from 'uuid';
+import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 
-export class FileUploader extends Component {
+export function FileUploader() {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            fileUploaded: null,
-            visible: true
-        };
-    }
+    const storage = getStorage()
+    const [image, setImage] = useState(null)
+    const [visible, setVisible] = useState(true)
 
-    onImageChange = event => {
+    function onImageChange(event) {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
-            this.setState({
-                image: URL.createObjectURL(img),
-                visible: false
-            });
+            const storageRef = ref(storage, `/files/${img.name}`)
+            const uploadTask = uploadBytesResumable(storageRef, img);
+
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const percent = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+
+                    // update progress
+                    console.log(percent);
+                },
+                (err) => console.log(err),
+                () => {
+                    // download url
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                        console.log(url);
+                        setVisible(false)
+                        setImage(url)
+                    });
+                }
+            );
         }
     }
 
-    render() {
-        return (
-            <div className="banner">
-                <label>
-                    {
-                        this.state.visible ?
-                            <div style={{padding: '10%'}}>
-                                <h1 className="upload-image">Upload image</h1>
-                            </div> :
-                            <img alt="Select image" src={this.state.image}/>
-                    }
-                    <input type="file" style={{display: 'none'}} name="myImage" onChange={this.onImageChange}/>
-                </label>
-            </div>
-        )
-    }
+    return (
+        <div className="banner">
+            <label>
+                {
+                    visible ?
+                        <div style={{padding: '10%'}}>
+                            <h1 className="upload-image">Upload image</h1>
+                        </div> :
+                        <img alt="Select image" src={image}/>
+                }
+                <input type="file" style={{display: 'none'}} name="myImage"
+                       onChange={(event) => onImageChange(event)}/>
+            </label>
+        </div>
+    )
 }
 
 export function NewTour() {
@@ -46,6 +61,7 @@ export function NewTour() {
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [loading, setLoading] = useState(false);
+
     const collectionRef = collection(db, 'test');
 
     async function addBlog() {
@@ -62,7 +78,7 @@ export function NewTour() {
             return hours + ':' + minutes + ' ' + ampm;
         }
 
-        Date.prototype.formatDay = function() {
+        Date.prototype.formatDay = function () {
             return this.getDay() + ' ' + monthNames[this.getMonth()] + ' ' + this.getFullYear();
         }
 
