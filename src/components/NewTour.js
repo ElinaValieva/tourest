@@ -90,30 +90,29 @@ export function NewTour() {
 
     return (
         <div>
-            <div className="banner">
-                <div className="banner">
-                    <label>
-                        {
-                            visible ?
-                                <div style={{padding: '10%'}}>
-                                    <h1 className="upload-image">Upload image</h1>
-                                </div> :
-                                <img alt="Select image" src={image}/>
-                        }
-                        <input type="file" style={{display: 'none'}} name="myImage"
-                               onChange={(event) => onImageChange(event)}/>
-                    </label>
-                </div>
-            </div>
-
             <div className="blog">
                 <textarea className="title" placeholder="Blog title..."
                           onChange={(e) => setTitle(e.target.value)}></textarea>
+                <div className="banner">
+                    <div className="banner">
+                        <label>
+                            {
+                                visible ?
+                                    <div style={{padding: '10%'}}>
+                                        <h1 className="upload-image">Upload image</h1>
+                                    </div> :
+                                    <img className="banner-image" alt="Select image" src={image}/>
+                            }
+                            <input type="file" style={{display: 'none'}} name="myImage"
+                                   onChange={(event) => onImageChange(event)}/>
+                        </label>
+                    </div>
+                </div>
                 <textarea className="article" placeholder="Start writing here..."
                           onChange={(e) => setText(e.target.value)}></textarea>
             </div>
 
-            <div className="about-content">
+            <div className="banner-btn">
                 <button className="btn btn-primary"
                         disabled={loading}
                         onClick={() => createPostWithSource()}>Share your tour Now

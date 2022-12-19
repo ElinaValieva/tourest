@@ -1134,6 +1134,7 @@ body {
     position: relative;
     background-size: cover;
     background: #e7e7e7 center;
+    object-fit: contain;
 }
 
 .banner-upload-btn {
@@ -1245,4 +1246,19 @@ textarea::-webkit-scrollbar-thumb {
     to {
         transform: rotate(360deg);
     }
+}
+
+.banner-image {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    background: var(--white-1);
+}
+
+.banner-btn {
+    margin-bottom: 0;
+    padding: 1%;
+    position: absolute;
+    left: 45%;
+    width: 5%;
 }
