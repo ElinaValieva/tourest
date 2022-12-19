@@ -1,12 +1,6 @@
 import {useEffect, useState} from "react";
-import {
-    collection,
-    onSnapshot,
-    limit,
-    orderBy,
-    query
-} from 'firebase/firestore';
-import db from './firebase';
+import {collection, onSnapshot, limit, orderBy, query} from 'firebase/firestore';
+import db from '../firebase';
 import {Link} from "react-router-dom";
 
 const Countries = ({countries}) => (

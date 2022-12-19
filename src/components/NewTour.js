@@ -1,7 +1,5 @@
 import {Component} from "react";
 import React from 'react';
-import {FaFileImage, FaImage, FaUpload} from "react-icons/fa";
-import {Link} from "react-router-dom";
 
 export class FileUploader extends Component {
 
@@ -42,6 +40,32 @@ export class FileUploader extends Component {
 }
 
 export class NewTour extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            text: ''
+        };
+    }
+
+    onClick = event => {
+        event.preventDefault()
+        // return createNote({
+        //     title: 'kek',
+        //     text: 'pek'
+        // }).then((e) => {
+        //     console.log(e)
+        //     this.setState({
+        //         title: '',
+        //         text: ''
+        //     });
+        // }).catch((err) => {
+        //     console.log(err)
+        // })
+
+    }
+
     render() {
         return (
             <div>
@@ -50,12 +74,13 @@ export class NewTour extends Component {
                 </div>
 
                 <div className="blog">
-                    <textarea className="title" placeholder="Blog title..."></textarea>
-                    <textarea className="article" placeholder="Start writing here..."></textarea>
+                    <textarea className="title" value={this.state.title} placeholder="Blog title..."></textarea>
+                    <textarea className="article" value={this.state.text}
+                              placeholder="Start writing here..."></textarea>
                 </div>
 
                 <div className="about-content">
-                    <button className="btn btn-primary">Share your tour Now</button>
+                    <button className="btn btn-primary" onClick={this.onClick}>Share your tour Now</button>
                 </div>
             </div>
         )
