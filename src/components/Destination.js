@@ -1,10 +1,19 @@
-import {Component} from "react";
+import {useEffect, useState} from "react";
+import {
+    collection,
+    onSnapshot,
+    limit,
+    orderBy,
+    query
+} from 'firebase/firestore';
+import db from './firebase';
+import {Link} from "react-router-dom";
 
 const Countries = ({countries}) => (
     <ul className="destination-list">
         {countries.map((country) => (
             <li className={country.class} key={country.id}>
-                <a href="#" className="destination-card">
+                <Link to='/tour' className="destination-card">
                     <figure className="card-banner">
                         <img src={country.url} width={country.width} height={country.height}
                              loading="lazy"
@@ -14,72 +23,55 @@ const Countries = ({countries}) => (
                         <p className="card-subtitle">{country.text}</p>
                         <h3 className="h3 card-title">{country.title}</h3>
                     </div>
-                </a>
+                </Link>
             </li>
         ))}
     </ul>
 )
 
-const cardInfo = [
-    {
-        id: 1,
-        title: "Maldives",
-        text: "Malé",
-        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-1.jpeg",
-        height: 1100,
-        width: 1140,
-        class: "w-50"
-    },
-    {
-        id: 2,
-        title: "Thailand",
-        text: "Bangkok",
-        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-2.jpeg",
-        height: 1100,
-        width: 1140,
-        class: "w-50"
-    },
-    {
-        id: 3,
-        title: "Malaysia",
-        text: "Kuala Lumpur",
-        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-3.jpeg",
-        height: 1100,
-        width: 480,
-        class: ""
-    },
-    {
-        id: 4,
-        title: "Nepal",
-        text: "Kathmandu",
-        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-4.jpeg",
-        height: 1100,
-        width: 480,
-        class: ""
-    },
-    {
-        id: 5,
-        title: "Indonesia",
-        text: "Jakarta",
-        url: "https://storage.googleapis.com/tourest_bucket_xxx/destination-5.jpeg",
-        height: 1100,
-        width: 480,
-        class: ""
-    }
-]
+export function Destination() {
+    const collectionRef = collection(db, 'destination');
+    const [destinations, setDestinations] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-export class Destination extends Component {
-    render() {
-        return (
-            <section className="section destination">
-                <div className="container">
-                    <p className="section-subtitle">Destinations</p>
-                    <h2 className="h2 section-title">Choose Your Place</h2>
-                    <ul className="destination-list">
-                        <Countries countries={cardInfo}/>
-                    </ul>
-                </div>
-            </section>
-        )
-    }
+    useEffect(() => {
+        const q = query(
+            collectionRef,
+            orderBy('id', 'asc'),
+            limit(5)
+        );
+
+        setLoading(true);
+        const unsub = onSnapshot(q, (querySnapshot) => {
+            const items = [];
+            let index = 0
+            querySnapshot.forEach((doc) => {
+                let data = doc.data();
+                data.height = 1100
+                data.width = index <= 1 ? 1140 : 480
+                data.class = index <= 1 ? 'w-50' : ''
+                items.push(data);
+                index++
+            });
+            setDestinations(items);
+            setLoading(false);
+        });
+        return () => {
+            unsub();
+        };
+
+    }, []);
+
+    return (
+        <section className="section destination">
+            <div className="container">
+                <p className="section-subtitle">Destinations</p>
+                <h2 className="h2 section-title">Choose Your Place</h2>
+                <ul className="destination-list">
+                    {loading ? <h1>Loading...</h1> : null}
+                    <Countries countries={destinations}/>
+                </ul>
+            </div>
+        </section>
+    )
 }
