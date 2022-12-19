@@ -3,6 +3,7 @@ import {collection, doc, setDoc} from 'firebase/firestore';
 import db from '../firebase';
 import {v4 as uuidv4} from 'uuid';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import {Button, Container, TextField} from "@mui/material";
 
 function DateUtil() {
     let date = new Date();
@@ -90,10 +91,20 @@ export function NewTour() {
 
     return (
         <div>
-            <div className="blog">
-                <textarea className="title" placeholder="Blog title..."
-                          onChange={(e) => setTitle(e.target.value)}></textarea>
-                <div className="banner">
+            <Container maxWidth="xl" fixed sx={{
+                '& .MuiTextField-root': {m: 1, width: '100%'},
+            }}>
+                <div className="blog">
+                    <TextField
+                        id="standard-multiline-flexible"
+                        label="Title"
+                        multiline
+                        maxRows={4}
+                        variant="standard"
+                        onChange={(e) => setTitle(e.target.value)}
+                        size="normal"
+                        margin="normal"
+                    />
                     <div className="banner">
                         <label>
                             {
@@ -107,17 +118,23 @@ export function NewTour() {
                                    onChange={(event) => onImageChange(event)}/>
                         </label>
                     </div>
+                    <TextField
+                        id="standard-multiline-flexible"
+                        label="Start writing here .."
+                        multiline
+                        minRows={4}
+                        variant="standard"
+                        onChange={(e) => setText(e.target.value)}
+                    />
                 </div>
-                <textarea className="article" placeholder="Start writing here..."
-                          onChange={(e) => setText(e.target.value)}></textarea>
-            </div>
 
-            <div className="banner-btn">
-                <button className="btn btn-primary"
-                        disabled={loading}
-                        onClick={() => createPostWithSource()}>Share your tour Now
-                </button>
-            </div>
+                <div className="banner-btn">
+                    <Button variant="outlined"
+                            disabled={loading}
+                            size="large"
+                            onClick={() => createPostWithSource()}>Share post</Button>
+                </div>
+            </Container>
         </div>
     )
 }

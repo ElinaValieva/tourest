@@ -1135,6 +1135,7 @@ body {
     background-size: cover;
     background: #e7e7e7 center;
     object-fit: contain;
+    margin-left: 8px;
 }
 
 .banner-upload-btn {
@@ -1156,7 +1157,6 @@ body {
 }
 
 .blog {
-    width: 70vw;
     min-width: 400px;
     display: block;
     margin: auto;
@@ -1256,9 +1256,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .banner-btn {
-    margin-bottom: 0;
     padding: 1%;
     position: absolute;
     left: 45%;
-    width: 5%;
 }
