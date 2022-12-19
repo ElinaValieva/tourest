@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {collection, onSnapshot, limit, orderBy, query} from 'firebase/firestore';
 import db from '../firebase';
 import {Link} from "react-router-dom";
+import {Box, LinearProgress} from "@mui/material";
 
 const Countries = ({countries}) => (
     <ul className="destination-list">
@@ -62,7 +63,10 @@ export function Destination() {
                 <p className="section-subtitle">Destinations</p>
                 <h2 className="h2 section-title">Choose Your Place</h2>
                 <ul className="destination-list">
-                    {loading ? <h1>Loading...</h1> : null}
+                    {loading ?
+                        <Box sx={{width: '100%'}}>
+                            <LinearProgress />
+                        </Box> : null}
                     <Countries countries={destinations}/>
                 </ul>
             </div>

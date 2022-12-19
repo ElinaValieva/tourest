@@ -13,6 +13,9 @@ const theme = responsiveFontSizes(createTheme({
     palette: {
         primary: {
             main: 'hsl(180, 98%, 31%)'
+        },
+        info: {
+            main: 'hsl(0, 0%, 100%)'
         }
     },
     typography: {

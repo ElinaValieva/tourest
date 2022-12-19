@@ -1,4 +1,5 @@
 import {Component} from "react";
+import {Button} from "@mui/material";
 
 export class Banner extends Component {
     render() {
@@ -20,8 +21,8 @@ export class Banner extends Component {
                         </p>
 
                         <div className="btn-group">
-                            <a href="#" className="btn btn-primary">Contact Us</a>
-                            <a href="#" className="btn btn-outline">Learn More</a>
+                            <Button href="/new" variant="contained">Contact Us</Button>
+                            <Button href="/about" variant="outlined">Learn More</Button>
                         </div>
                     </div>
 

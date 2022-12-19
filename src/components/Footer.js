@@ -1,5 +1,6 @@
 import {Component} from "react";
 import {BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsGoogle} from "react-icons/bs"
+import {Button, ButtonGroup, TextField} from "@mui/material";
 
 const FooterList = ({header, descriptions}) => (
     <ul className="footer-list">
@@ -46,12 +47,15 @@ export class Footer extends Component {
                             <p className="newsletter-text">
                                 For the latest deals and tips, travel no further than your inbox
                             </p>
-                            <form action="" className="newsletter-form">
-                                <input type="email" name="email" required placeholder="Email address"
-                                       className="newsletter-input"/>
-
-                                <button type="submit" className="btn btn-primary">Subscribe</button>
-                            </form>
+                            <ButtonGroup variant="outlined"
+                                         aria-label="outlined button group" size="small">
+                                <TextField id="outlined-basic"
+                                           type={"email"}
+                                           label="Email address"
+                                           color={"info"}
+                                           variant="standard"/>
+                                <Button variant="contained">Subscribe</Button>
+                            </ButtonGroup>
                         </div>
                     </div>
 

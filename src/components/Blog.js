@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {collection, limit, onSnapshot, orderBy, query} from "firebase/firestore";
 import db from "../firebase";
+import {Box, LinearProgress} from "@mui/material";
 
 const BlogCard = ({cards}) => (
     <ul className="blog-list">
@@ -81,7 +82,10 @@ export function Blog() {
             <div className="container">
                 <p className="section-subtitle">From The Blog Post</p>
                 <h2 className="h2 section-title">Latest News & Articles</h2>
-                {loading ? <h1>Loading...</h1> : null}
+                {loading ?
+                    <Box sx={{width: '100%'}}>
+                        <LinearProgress/>
+                    </Box> : null}
                 <BlogCard cards={popularCards}/>
             </div>
         </section>

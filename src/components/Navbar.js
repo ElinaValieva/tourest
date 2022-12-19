@@ -1,14 +1,12 @@
 import {Component} from "react";
-import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
 
 const NavbarMenu = ({links}) => (
-    <ul className="navbar-list">
+    <div className="navbar-list">
         {links.map((link) => (
-            <li key={link.name}>
-                <Link to={link.href} className="navbar-link">{link.name}</Link>
-            </li>
+            <Button href={link.href} color="info">{link.name}</Button>
         ))}
-    </ul>
+    </div>
 )
 
 const links = [
@@ -31,18 +29,12 @@ export class Navbar extends Component {
         return (
             <header className="header">
                 <div className="container">
-                    <a href="#">
-                        <h1 className="logo">
-                            <Link to="/" className="navbar-logo">Tourest</Link>
-                        </h1>
-                    </a>
-                    <button className="nav-toggle-btn" aria-label="Toggle Menu">
-                        <ion-icon name="menu-outline" className="open"></ion-icon>
-                        <ion-icon name="close-outline" className="close"></ion-icon>
-                    </button>
+                    <h1 className="logo">
+                        <Button style={{fontSize: '18px', fontWeight: 'bold'}} href="/" color={"info"} size="large">Tourest</Button>
+                    </h1>
                     <nav className="navbar">
                         <NavbarMenu links={links}/>
-                        <Link to="/new" className="btn btn-secondary">Share your tour Now</Link>
+                        <Button href="/new" color="info">Share your tour Now</Button>
                     </nav>
                 </div>
             </header>

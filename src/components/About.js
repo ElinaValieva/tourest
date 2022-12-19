@@ -1,6 +1,6 @@
 import {Component} from "react";
 import {FaBriefcase, FaCompass, FaUmbrella} from "react-icons/fa";
-import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
 
 const Tips = ({tips}) => (
     <ul className="about-list">
@@ -51,7 +51,7 @@ export class About extends Component {
                             which don't look even slightly believable.
                         </p>
                         <Tips tips={tips}/>
-                        <Link to="/new" className="btn btn-primary">Share your tour Now</Link>
+                        <Button href="/new" variant="contained">Share your tour Now</Button>
                     </div>
 
                     <figure className="about-banner">
