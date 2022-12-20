@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {collection, limit, onSnapshot, orderBy, query} from "firebase/firestore";
 import db from "../firebase";
-import {Box, LinearProgress} from "@mui/material";
+import {Box, Button, LinearProgress} from "@mui/material";
 
 const BlogCard = ({cards}) => (
     <ul className="blog-list">
@@ -39,10 +39,7 @@ const BlogCard = ({cards}) => (
                             <a href="#">{card.title}</a>
                         </h3>
 
-                        <a href="#" className="btn-link">
-                            <span>Read More</span>
-                            <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-                        </a>
+                        <Button href="/" color="primary">Read More</Button>
                     </div>
                 </div>
             </li>
