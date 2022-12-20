@@ -167,6 +167,11 @@ body {
     font-family: var(--ff-abril-fatface);
 }
 
+.markdown-text {
+    margin-top: 20px;
+    text-align: left;
+}
+
 .img-cover {
     width: 100%;
     height: 100%;

@@ -124,7 +124,7 @@ export function NewTour() {
                         multiline
                         minRows={4}
                         variant="standard"
-                        onChange={(e) => setText(e.target.value)}
+                        onChange={(e) => setText(e.target.value.replace(/(?:\r\n|\r|\n)/g, '<br/>'))}
                     />
                 </div>
 
