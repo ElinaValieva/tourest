@@ -29,33 +29,33 @@ export function NewTour() {
 
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
+    const [source, setSource] = useState(null)
     const [image, setImage] = useState(null)
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(true)
 
     function onImageChange(event) {
         if (event.target.files && event.target.files[0]) {
-            setImage(URL.createObjectURL(event.target.files[0]))
+            setImage(event.target.files[0])
+            setSource(URL.createObjectURL(event.target.files[0]))
             setVisible(false)
         }
     }
 
     const storage = getStorage()
-    const collectionRef = collection(db, 'test');
+    const collectionRef = collection(db, 'tourest');
 
     async function createPost(url) {
         let date = DateUtil();
 
         const textDetail = {
-            id: uuidv4(),
+            id: date.getMilliseconds(),
+            uuid: uuidv4(),
             author: 'Jony Bristow',
-            avatar: 'https://storage.googleapis.com/tourest_bucket_xxx/author-avatar.png',
-            publishedDay: date.formatDay(),
-            publishedTime: date.formatTime(),
+            published: `${date.formatDay()}  ${date.formatTime()}`,
             source: url,
-            surname: 'Admin',
-            country: 'Malé',
-            city: 'Nepal',
+            city: 'Malé',
+            country: 'Nepal',
             title: title,
             text: text
         }
@@ -112,7 +112,7 @@ export function NewTour() {
                                     <div style={{padding: '10%'}}>
                                         <h1 className="upload-image">Upload image</h1>
                                     </div> :
-                                    <img className="banner-image" alt="Select image" src={image}/>
+                                    <img className="banner-image" alt="Select image" src={source}/>
                             }
                             <input type="file" style={{display: 'none'}} name="myImage"
                                    onChange={(event) => onImageChange(event)}/>

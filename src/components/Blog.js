@@ -48,16 +48,17 @@ const BlogCard = ({cards}) => (
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button sx={{left: '65%', padding: '2%'}} size="small">Read More</Button>
+                        <Button href={card.id + ""} sx={{left: '65%', padding: '2%'}} size="small">
+                            Read More
+                        </Button>
                     </CardActions>
                 </Card>
             </Grid>
         ))}
     </Grid>
 )
-
-export function Blog() {
-    const collectionRef = collection(db, 'blog');
+export function Blog({limitCnt}) {
+    const collectionRef = collection(db, 'tourest');
     const [popularCards, setPopularCards] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -65,14 +66,17 @@ export function Blog() {
         const q = query(
             collectionRef,
             orderBy('id', 'asc'),
-            limit(3)
+            limit(limitCnt)
         );
 
         setLoading(true);
         const unsub = onSnapshot(q, (querySnapshot) => {
             const items = [];
             querySnapshot.forEach((doc) => {
-                items.push(doc.data());
+                let instance = doc.data()
+                instance.id = doc.id
+                console.log(instance)
+                items.push(instance);
             });
             setPopularCards(items);
             setLoading(false);

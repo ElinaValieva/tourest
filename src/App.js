@@ -4,10 +4,11 @@ import {Banner} from "./components/Banner";
 import {Destination} from "./components/Destination";
 import {About} from "./components/About";
 import {Footer} from "./components/Footer";
-import {Blog} from "./components/Blog";
+import {Blog, Child} from "./components/Blog";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {NewTour} from "./components/NewTour";
 import {createTheme, responsiveFontSizes, ThemeProvider} from "@mui/material";
+import {Tour} from "./components/Tour";
 
 const theme = responsiveFontSizes(createTheme({
     palette: {
@@ -48,7 +49,7 @@ function App() {
                                     <Banner/>
                                     <Destination/>
                                     <About/>
-                                    <Blog/>
+                                    <Blog limitCnt={3}/>
                                     <Footer/>
                                 </Route>
                                 <Route path="/destination">
@@ -63,6 +64,9 @@ function App() {
                                 <Route path="/new">
                                     <NewTour/>
                                 </Route>
+                                <Switch>
+                                    <Route path="/:id" children={<Tour/>}></Route>
+                                </Switch>
                             </Switch>
                         </article>
                     </main>
