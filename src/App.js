@@ -28,6 +28,9 @@ const theme = responsiveFontSizes(createTheme({
         h3: {
             fontSize: 10,
             color: '#9c9c9c'
+        },
+        h4: {
+            fontSize: 26
         }
     },
 }));

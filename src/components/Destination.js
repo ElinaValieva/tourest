@@ -2,26 +2,56 @@ import {useEffect, useState} from "react";
 import {collection, onSnapshot, limit, orderBy, query} from 'firebase/firestore';
 import db from '../firebase';
 import {Link} from "react-router-dom";
-import {Box, LinearProgress} from "@mui/material";
+import {
+    Box,
+    Card,
+    CardMedia,
+    Grid,
+    LinearProgress,
+    Typography
+} from "@mui/material";
 
 const Countries = ({countries}) => (
-    <ul className="destination-list">
+    <Grid container spacing={2}>
         {countries.map((country) => (
-            <li className={country.class} key={country.id}>
-                <Link to='/tour' className="destination-card">
-                    <figure className="card-banner">
-                        <img src={country.url} width={country.width} height={country.height}
-                             loading="lazy"
-                             alt={country.title} className="img-cover"/>
-                    </figure>
-                    <div className="card-content">
-                        <p className="card-subtitle">{country.text}</p>
-                        <h3 className="h3 card-title">{country.title}</h3>
-                    </div>
+            <Grid item xs={country.space} md={country.space} key={country.id}>
+                <Link to="/tour">
+                    <Card sx={{position: 'relative'}}>
+                        <CardMedia
+                            component="img"
+                            alt={country.title}
+                            height="140"
+                            image={country.url}
+                        />
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '0',
+                            left: '0',
+                            width: '100%',
+                            zIndex: 1
+                        }}>
+                            <Typography
+                                sx={{
+                                    color: 'var(--mikado-yellow)',
+                                    fontFamily: 'var(--ff-comforter-brush)',
+                                    fontsize: 'var(--fs-5)'
+                                }}
+                                variant="h4" color="text.secondary">
+                                {country.text}
+                            </Typography>
+                            <Typography gutterBottom sx={{
+                                marginBottom: '50px',
+                                color: 'var(--white-1)',
+                                fontFamily: 'var(--ff-abril-fatface)'
+                            }} variant="h4" color="text.secondary">
+                                {country.title}
+                            </Typography>
+                        </div>
+                    </Card>
                 </Link>
-            </li>
+            </Grid>
         ))}
-    </ul>
+    </Grid>
 )
 
 export function Destination() {
@@ -42,9 +72,7 @@ export function Destination() {
             let index = 0
             querySnapshot.forEach((doc) => {
                 let data = doc.data();
-                data.height = 1100
-                data.width = index <= 1 ? 1140 : 480
-                data.class = index <= 1 ? 'w-50' : ''
+                data.space = index <= 1 ? 6 : 4
                 items.push(data);
                 index++
             });
@@ -62,13 +90,11 @@ export function Destination() {
             <div className="container">
                 <p className="section-subtitle">Destinations</p>
                 <h2 className="h2 section-title">Choose Your Place</h2>
-                <ul className="destination-list">
-                    {loading ?
-                        <Box sx={{width: '100%'}}>
-                            <LinearProgress />
-                        </Box> : null}
-                    <Countries countries={destinations}/>
-                </ul>
+                {loading ?
+                    <Box sx={{width: '100%'}}>
+                        <LinearProgress/>
+                    </Box> : null}
+                <Countries countries={destinations}/>
             </div>
         </section>
     )
