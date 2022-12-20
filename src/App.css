@@ -187,68 +187,6 @@ body {
     margin-bottom: 50px;
 }
 
-.popular-list,
-.blog-list {
-    display: grid;
-    gap: 30px;
-}
-
-.popular-card,
-.blog-card {
-    box-shadow: 0 10px 30px hsla(0, 0%, 0%, 0.1);
-    border-radius: var(--radius-6);
-    overflow: hidden;
-}
-
-:is(.popular, .blog) .card-banner {
-    position: relative;
-}
-
-.card-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: var(--mikado-yellow);
-    color: var(--white-1);
-    padding: 14px 10px;
-    border-radius: var(--radius-6);
-}
-
-.card-badge ion-icon {
-    --ionicon-stroke-width: 60px;
-    font-size: 20px;
-    margin-inline: auto;
-}
-
-.card-badge time {
-    font-weight: var(--fw-700);
-}
-
-:is(.popular, .blog) .card-content {
-    padding: 30px 15px;
-}
-
-.card-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 20px;
-}
-
-:is(.popular, .blog) .card-title {
-    color: var(--granite-gray);
-    font-size: var(--fs-5);
-    margin-block: 20px;
-}
-
-:is(.popular, .blog) .card-title > a {
-    color: inherit;
-}
-
-:is(.popular, .blog) .card-title > a:is(:hover, :focus) {
-    color: var(--viridian-green);
-}
-
 .header {
     background: var(--viridian-green);
     padding-block: 20px;

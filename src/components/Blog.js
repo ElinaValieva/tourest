@@ -1,50 +1,59 @@
 import {useEffect, useState} from "react";
 import {collection, limit, onSnapshot, orderBy, query} from "firebase/firestore";
 import db from "../firebase";
-import {Box, Button, LinearProgress} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    CardMedia, Grid,
+    LinearProgress,
+    Typography
+} from "@mui/material";
 
 const BlogCard = ({cards}) => (
-    <ul className="blog-list">
+    <Grid container spacing={2}>
         {cards.map((card) => (
-            <li key={card.id}>
-                <div className="blog-card">
-                    <figure className="card-banner">
-                        <a href="#">
-                            <img src={card.source} width="740" height="518" loading="lazy"
-                                 alt="A good traveler has no fixed plans and is not intent on arriving."
-                                 className="img-cover"/>
-                        </a>
-                        <span className="card-badge">
-                        <ion-icon name="time-outline"></ion-icon>
-                        <time dateTime="12-04">{card.publishedDay}</time>
-                    </span>
-                    </figure>
-
-                    <div className="card-content">
-                        <div className="card-wrapper">
-                            <div className="author-wrapper">
-                                <figure className="author-avatar">
-                                    <img src={card.avatar} width="30" height="30"
-                                         alt={card.author}/>
-                                </figure>
-                                <div>
-                                    <a href="#" className="author-name">{card.author}</a>
-                                    <p className="author-title">{card.surname}</p>
-                                </div>
-                            </div>
-                            <time className="publish-time" dateTime="10:30">{card.publishedTime}</time>
-                        </div>
-
-                        <h3 className="card-title">
-                            <a href="#">{card.title}</a>
-                        </h3>
-
-                        <Button href="/" color="primary">Read More</Button>
-                    </div>
-                </div>
-            </li>
+            <Grid item xs={4} key={card.id}>
+                <Card sx={{maxWidth: 345}}>
+                    <CardMedia
+                        component="img"
+                        alt="image source"
+                        height="140"
+                        image={card.source}
+                    />
+                    <CardHeader
+                        avatar={
+                            <Avatar sx={{backgroundColor: 'hsl(47, 98%, 50%)'}} aria-label="card">
+                                {card.author.split(' ').map(e => e.charAt(0).toUpperCase())}
+                            </Avatar>
+                        }
+                        title={
+                            <Typography variant={"h1"} sx={{textAlign: 'left', marginTop: '5%'}}>
+                                {card.author}
+                            </Typography>
+                        }
+                        subheader={
+                            <Typography variant={"h3"} sx={{textAlign: 'right'}}>
+                                {card.publishedDay} {card.publishedTime}
+                            </Typography>
+                        }
+                    />
+                    <CardContent>
+                        <Typography variant="body2" color="text.secondary">
+                            {card.title}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button sx={{left: '65%', padding: '2%'}} size="small">Read More</Button>
+                    </CardActions>
+                </Card>
+            </Grid>
         ))}
-    </ul>
+    </Grid>
 )
 
 export function Blog() {

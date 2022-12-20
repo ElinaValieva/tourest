@@ -20,6 +20,15 @@ const theme = responsiveFontSizes(createTheme({
     },
     typography: {
         htmlFontSize: 8,
+        h1: {
+            fontSize: 12,
+            fontWeight: "bold",
+            color: '#666'
+        },
+        h3: {
+            fontSize: 10,
+            color: '#9c9c9c'
+        }
     },
 }));
 

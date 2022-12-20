@@ -4,7 +4,7 @@ import {Button} from "@mui/material";
 const NavbarMenu = ({links}) => (
     <div className="navbar-list">
         {links.map((link) => (
-            <Button href={link.href} color="info">{link.name}</Button>
+            <Button key={link.name} href={link.href} color="info">{link.name}</Button>
         ))}
     </div>
 )
