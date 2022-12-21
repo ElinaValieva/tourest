@@ -1,49 +1,31 @@
-resource "google_firebase_project" "default" {
-  provider = google-beta
-  project  = var.project_id
+provider "google-beta" {
+  project     = var.project_id
+  region      = var.region
+  credentials = base64decode(google_service_account_key.firebase_key.private_key)
 }
 
-resource "google_firebase_web_app" "basic" {
-  provider        = google-beta
-  project         = var.project_id
-  display_name    = "Display Name Basic"
-  deletion_policy = "DELETE"
+resource "google_firebase_project" "default" {
+  provider = google-beta
+
+  depends_on = [
+    google_project_service.firebase,
+    google_project_iam_member.service_account_firebase_admin,
+  ]
+}
+
+resource "google_firebase_project_location" "default" {
+  provider = google-beta
+
+  location_id = var.zone
+
+  depends_on = [
+    google_firebase_project.default,
+  ]
+}
+
+resource "google_firebase_web_app" "wild_workouts" {
+  provider     = google-beta
+  display_name = lower(var.github_project_name)
 
   depends_on = [google_firebase_project.default]
 }
-
-data "google_firebase_web_app_config" "basic" {
-  provider   = google-beta
-  web_app_id = google_firebase_web_app.basic.app_id
-}
-
-resource "google_storage_bucket" "default" {
-  project  = var.project_id
-  provider = google-beta
-  name     = "fb_bucket_xxx"
-  location = "US"
-}
-
-resource "google_storage_bucket_object" "default" {
-  provider = google-beta
-  bucket   = google_storage_bucket.default.name
-  name     = "firebase-config.json"
-
-  content = jsonencode({
-    appId             = google_firebase_web_app.basic.app_id
-    apiKey            = data.google_firebase_web_app_config.basic.api_key
-    authDomain        = data.google_firebase_web_app_config.basic.auth_domain
-    databaseURL       = lookup(data.google_firebase_web_app_config.basic, "database_url", "")
-    storageBucket     = lookup(data.google_firebase_web_app_config.basic, "storage_bucket", "")
-    messagingSenderId = lookup(data.google_firebase_web_app_config.basic, "messaging_sender_id", "")
-    measurementId     = lookup(data.google_firebase_web_app_config.basic, "measurement_id", "")
-  })
-}
-resource "google_firestore_document" "firebase_doc" {
-  project     = var.project_id
-  collection  = var.bucket_reference
-  document_id = "${random_uuid.test.result}-rp"
-  fields      = "{\"akey\":{\"stringValue\":\"avalue\"}}"
-}
-
-resource "random_uuid" "test" {}

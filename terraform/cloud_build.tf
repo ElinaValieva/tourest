@@ -4,13 +4,10 @@ resource "google_cloudbuild_trigger" "cloud-build-trigger" {
   description = "CI trigger for deploying to GCP"
   tags        = ["gcp", "cloud_build", var.cloud_run_name]
 
-  github {
-    name  = var.github_project_name
-    owner = var.github_account
-    push {
-      branch       = "^master$"
-      invert_regex = false
-    }
+  source_to_build {
+    uri       = format("https://github.com/%s/%s", var.github_account, var.github_project_name)
+    ref       = "refs/heads/main"
+    repo_type = "GITHUB"
   }
 
   substitutions = {

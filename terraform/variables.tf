@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "Project ID"
-  default     = "gcp-playground-06071995"
+  default     = "igneous-effort-362111"
   type        = string
 }
 
@@ -24,18 +24,12 @@ variable "github_account" {
 
 variable "github_project_name" {
   description = "Github Project Name"
-  default     = "gcp_playground_system"
+  default     = "tourest"
   type        = string
 }
 
 variable "cloud_run_name" {
   description = "Cloud Run Name"
-  default     = "gcp-playground-system"
-  type        = string
-}
-
-variable "bucket_reference" {
-  description = "Bucket name for images"
-  default     = "tourest_bucket"
+  default     = "run_tourest"
   type        = string
 }
