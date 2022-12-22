@@ -13,6 +13,5 @@ steps:
             '--region=${_REGION}',
             '--port=443',
             '--allow-unauthenticated',
-            '--set-env-vars REACT_APP_PROJECT_ID=${_PROJECT}',
             '--platform=managed',
             '--image=gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA' ]
