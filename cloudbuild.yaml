@@ -3,11 +3,10 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: [ 'build',
             '-t', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA',
-            '--build-arg',
-            'API_KEY=${_FIREBASE_API_KEY}',
-            'APP_NAME=${_FIREBASE_APP_ID}',
-            'GCP_PROJECT=${_PROJECT}',
-            'MESSAGING_SENDER_ID=${_FIREBASE_MESSAGING_SENDER_ID}',
+            '--build-arg', 'API_KEY=${_FIREBASE_API_KEY}',
+            '--build-arg', 'APP_NAME=${_FIREBASE_APP_ID}',
+            '--build-arg', 'GCP_PROJECT=${_PROJECT}',
+            '--build-arg', 'MESSAGING_SENDER_ID=${_FIREBASE_MESSAGING_SENDER_ID}',
             '.' ]
 
   - id: 'push image to artifactory'
