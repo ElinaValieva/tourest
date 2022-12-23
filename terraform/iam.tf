@@ -3,13 +3,13 @@ resource "google_service_account_key" "firebase_key" {
 }
 
 resource "google_project_iam_member" "service_account_firebase_admin" {
-  project = var.project_id
+  project = var.PROJECT_ID
   role    = "roles/editor"
   member  = "serviceAccount:${google_service_account.firebase.email}"
 }
 
 resource "google_project_iam_member" "service_account_storage_admin" {
-  project = var.project_id
+  project = var.PROJECT_ID
   role    = "roles/storage.admin"
   member  = "serviceAccount:${google_service_account.firebase.email}"
 }

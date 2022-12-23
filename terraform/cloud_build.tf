@@ -1,21 +1,21 @@
 resource "google_cloudbuild_trigger" "cloud-build-trigger" {
   name        = "cloud-build-trigger"
-  location    = var.region
+  location    = var.REGION
   description = "CI trigger for deploying to GCP"
-  tags        = ["gcp", "cloud_build", var.cloud_run_name]
+  tags        = ["gcp", "cloud_build", var.CLOUD_RUN_NAME]
 
   source_to_build {
-    uri       = format("https://github.com/%s/%s", var.github_account, var.github_project_name)
+    uri       = format("https://github.com/%s/%s", var.GITHUB_ACCOUNT, var.GITHUB_PROJECT_NAME)
     ref       = "refs/heads/main"
     repo_type = "GITHUB"
   }
 
   substitutions = {
-    _PROJECT                      = var.project_id
-    _ACCOUNT                      = lower(var.github_account)
-    _APP                          = var.cloud_run_name
-    _IMAGE                        = var.github_project_name
-    _REGION                       = var.region
+    _PROJECT                      = var.PROJECT_ID
+    _ACCOUNT                      = lower(var.GITHUB_ACCOUNT)
+    _APP                          = var.CLOUD_RUN_NAME
+    _IMAGE                        = var.GITHUB_PROJECT_NAME
+    _REGION                       = var.REGION
     _FIREBASE_API_KEY             = data.google_firebase_web_app_config.basic.api_key
     _FIREBASE_APP_ID              = google_firebase_web_app.wild_workouts.app_id
     _FIREBASE_AUTH_DOMAIN         = data.google_firebase_web_app_config.basic.auth_domain

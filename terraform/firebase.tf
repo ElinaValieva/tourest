@@ -1,6 +1,6 @@
 provider "google-beta" {
-  project     = var.project_id
-  region      = var.region
+  project     = var.PROJECT_ID
+  region      = var.REGION
   credentials = base64decode(google_service_account_key.firebase_key.private_key)
 }
 
@@ -17,7 +17,7 @@ resource "google_firebase_project" "default" {
 resource "google_firebase_project_location" "default" {
   provider = google-beta
 
-  location_id = var.zone
+  location_id = var.ZONE
 
   depends_on = [
     google_firebase_project.default,
@@ -26,7 +26,7 @@ resource "google_firebase_project_location" "default" {
 
 resource "google_firebase_web_app" "wild_workouts" {
   provider     = google-beta
-  display_name = lower(var.github_project_name)
+  display_name = lower(var.GITHUB_PROJECT_NAME)
 
   depends_on = [google_firebase_project.default]
 }
@@ -39,7 +39,7 @@ data "google_firebase_web_app_config" "basic" {
 resource "google_firebaserules_release" "default" {
   provider     = google-beta
   name         = "cloud.firestore"
-  project      = var.project_id
+  project      = var.PROJECT_ID
   ruleset_name = google_firebaserules_ruleset.basic.name
 
   depends_on = [google_firebase_project.default]
@@ -57,6 +57,6 @@ resource "google_firebaserules_ruleset" "basic" {
     language = ""
   }
 
-  project    = var.project_id
+  project    = var.PROJECT_ID
   depends_on = [google_firebase_project.default]
 }

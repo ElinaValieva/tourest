@@ -1,9 +1,9 @@
 provider "google" {
-  project = var.project_id
-  region  = var.region
-  zone    = var.zone
+  project = var.PROJECT_ID
+  region  = var.REGION
+  zone    = var.ZONE
 }
 
 data "google_app_engine_default_service_account" "default" {
-  project = var.project_id
+  project = var.PROJECT_ID
 }

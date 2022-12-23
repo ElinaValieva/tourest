@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "create-env": "printenv > .env"
+    "create-env": "printenv > example.env"
   },
   "eslintConfig": {
     "extends": [
