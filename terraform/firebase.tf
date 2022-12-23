@@ -8,7 +8,7 @@ resource "google_firebase_project" "default" {
   provider = google-beta
 
   depends_on = [
-    google_project_service.firebase,
+    google_project_service.default,
     google_project_iam_member.service_account_storage_admin,
     google_project_iam_member.service_account_firebase_admin
   ]

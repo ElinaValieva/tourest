@@ -18,6 +18,6 @@ resource "google_service_account" "firebase" {
   account_id   = "firebase"
   display_name = "FireBase Service Account"
   depends_on   = [
-    google_project_service.firebase,
+    google_project_service.default,
   ]
 }

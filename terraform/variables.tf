@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "Project ID"
-  default     = "test-staging-372514"
+  default     = "endless-lamp-372515"
   type        = string
 }
 

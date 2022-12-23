@@ -5,13 +5,17 @@ locals {
     "run.googleapis.com",
     "iam.googleapis.com",
     "cloudbuild.googleapis.com",
+    "firebase.googleapis.com",
     "firebaserules.googleapis.com"
   ]
 }
 
-resource "google_project_service" "firebase" {
-  service    = "firebase.googleapis.com"
-  depends_on = [var.project_id]
-
+resource "google_project_service" "default" {
+  for_each                   = toset(local.services)
+  project                    = var.project_id
+  service                    = each.value
   disable_dependent_services = true
+  disable_on_destroy         = false
+
+  depends_on = [var.project_id]
 }
