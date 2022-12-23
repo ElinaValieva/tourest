@@ -7,7 +7,7 @@ steps:
             'API_KEY=${_FIREBASE_API_KEY}',
             'APP_NAME=${_FIREBASE_APP_ID}',
             'GCP_PROJECT=${_PROJECT}',
-            'MESSAGING_SENDER_ID=${_FIREBASE_MESSAGING_SENDER_ID}'
+            'MESSAGING_SENDER_ID=${_FIREBASE_MESSAGING_SENDER_ID}',
             '.' ]
 
   - id: 'push image to artifactory'
