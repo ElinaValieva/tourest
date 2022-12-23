@@ -3,7 +3,7 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: [ 'build',
             '-t', 'gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA',
-            '--build-arg', 'API_KEY=${_FIREBASE_API_KEY}'
+            '--build-arg', 'API_KEY=${_FIREBASE_API_KEY}',
             '.' ]
 
   - id: 'push image to artifactory'
