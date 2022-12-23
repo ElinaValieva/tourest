@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "Project ID"
-  default     = "igneous-effort-362111"
+  default     = "test-staging-372514"
   type        = string
 }
 

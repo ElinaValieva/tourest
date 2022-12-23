@@ -3,8 +3,8 @@ locals {
     "firestore.googleapis.com",
     "appengine.googleapis.com",
     "run.googleapis.com",
-    "iam.googleapis.com"
-
+    "iam.googleapis.com",
+    "cloudbuild.googleapis.com"
   ]
 }
 

@@ -9,7 +9,8 @@ resource "google_firebase_project" "default" {
 
   depends_on = [
     google_project_service.firebase,
-    google_project_iam_member.service_account_firebase_admin,
+    google_project_iam_member.service_account_storage_admin,
+    google_project_iam_member.service_account_firebase_admin
   ]
 }
 
@@ -28,4 +29,9 @@ resource "google_firebase_web_app" "wild_workouts" {
   display_name = lower(var.github_project_name)
 
   depends_on = [google_firebase_project.default]
+}
+
+data "google_firebase_web_app_config" "basic" {
+  provider   = google-beta
+  web_app_id = google_firebase_web_app.wild_workouts.app_id
 }
