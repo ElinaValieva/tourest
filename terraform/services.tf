@@ -4,7 +4,8 @@ locals {
     "appengine.googleapis.com",
     "run.googleapis.com",
     "iam.googleapis.com",
-    "cloudbuild.googleapis.com"
+    "cloudbuild.googleapis.com",
+    "firebaserules.googleapis.com"
   ]
 }
 
