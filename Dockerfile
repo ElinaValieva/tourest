@@ -22,8 +22,8 @@ RUN echo -e " \
     REACT_APP_FIREBASE_AUTH_DOMAIN=${GCP_PROJECT}.firebaseapp.com\n \
     REACT_APP_PROJECT_ID=${GCP_PROJECT}\n \
     REACT_APP_FIREBASE_STORAGE_BUCKET=${GCP_PROJECT}.appspot.com\n \
-    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=${MESSAGING_SENDER_ID}" > example.env
-RUN cat example.env
+    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=${MESSAGING_SENDER_ID}" > .env
+RUN cat .env
 ## Build sources
 COPY package*.json ./
 RUN npm install

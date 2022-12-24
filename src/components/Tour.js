@@ -59,7 +59,7 @@ export function Tour() {
     )
 }
 
-class CodeBlock extends PureComponent {
+export class CodeBlock extends PureComponent {
     static propTypes = {
         value: PropTypes.string.isRequired,
         language: PropTypes.string

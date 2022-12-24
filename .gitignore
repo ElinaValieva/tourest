@@ -37,5 +37,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Ignore example.env file from local run
-example.env
+# Ignore .env file from local run
+*.env

@@ -1,9 +1,13 @@
 import React, {useState} from "react";
-import {collection, doc, setDoc} from 'firebase/firestore';
+import {collection, doc, addDoc} from 'firebase/firestore';
 import db from '../firebase';
 import {v4 as uuidv4} from 'uuid';
+import {useHistory} from "react-router-dom"
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {Button, Container, TextField} from "@mui/material";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import {CodeBlock} from "./Tour";
 
 function DateUtil() {
     let date = new Date();
@@ -29,10 +33,13 @@ export function NewTour() {
 
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
-    const [source, setSource] = useState(null)
-    const [image, setImage] = useState(null)
+    const [source, setSource] = useState(null);
+    const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(true)
+    const [visible, setVisible] = useState(true);
+    const [id, setId] = useState(null)
+    const [preview, setPreview] = useState(false)
+    let navigate = useHistory()
 
     function onImageChange(event) {
         if (event.target.files && event.target.files[0]) {
@@ -61,8 +68,10 @@ export function NewTour() {
         }
 
         try {
-            await setDoc(doc(collectionRef), textDetail).then(() => {
+            await addDoc(collectionRef, textDetail).then((res) => {
+                setId(res.id)
                 setLoading(false);
+                navigate.push(`/${id}`)
             });
         } catch (error) {
             console.error(error);
@@ -118,14 +127,25 @@ export function NewTour() {
                                    onChange={(event) => onImageChange(event)}/>
                         </label>
                     </div>
-                    <TextField
-                        id="standard-multiline-flexible"
-                        label="Start writing here .."
-                        multiline
-                        minRows={4}
-                        variant="standard"
-                        onChange={(e) => setText(e.target.value.replace(/(?:\r\n|\r|\n)/g, '<br/>'))}
-                    />
+                    <Button variant="contained"
+                            sx={{margin: '10px 7px', display: 'flex'}}
+                            onClick={() => setPreview(!preview)}>Preview</Button>
+                    {preview && text
+                        ?
+                        <ReactMarkdown className="markdown-text"
+                                       remarkPlugins={[remarkGfm]}
+                                       renderers={{code: CodeBlock}}>{text.replaceAll('<br/>', "\n")}</ReactMarkdown>
+                        :
+                        <TextField
+                            defaultValue={text}
+                            id="standard-multiline-flexible"
+                            label="Start writing here .."
+                            multiline
+                            minRows={4}
+                            variant="standard"
+                            onChange={(e) => setText(e.target.value.replace(/(?:\r\n|\r|\n)/g, '<br/>'))}
+                        />
+                    }
                 </div>
 
                 <div className="banner-btn">
