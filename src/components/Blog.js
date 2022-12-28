@@ -1,17 +1,7 @@
 import {useEffect, useState} from "react";
-import {collection, limit, onSnapshot, orderBy, query} from "firebase/firestore";
-import db from "../firebase";
-import {
-    Avatar,
-    Box,
-    Card,
-    CardContent,
-    CardHeader,
-    CardMedia, Grid,
-    LinearProgress,
-    Typography
-} from "@mui/material";
+import {Avatar, Box, Card, CardContent, CardHeader, CardMedia, Grid, LinearProgress, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
+import {getPosts} from "../service/firestore";
 
 const BlogCard = ({cards}) => (
     <Grid container spacing={2}>
@@ -55,34 +45,24 @@ const BlogCard = ({cards}) => (
 )
 
 export function Blog({limitCnt}) {
-    const collectionRef = collection(db, 'tourest');
     const [popularCards, setPopularCards] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const q = query(
-            collectionRef,
-            orderBy('id', 'asc'),
-            limit(limitCnt)
-        );
-
         setLoading(true);
-        const unsub = onSnapshot(q, (querySnapshot) => {
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                let instance = doc.data()
-                instance.id = doc.id
-                console.log(instance)
-                items.push(instance);
-            });
-            setPopularCards(items);
-            setLoading(false);
-        });
-        return () => {
-            unsub();
-        };
-
-    }, []);
+        return getPosts(limitCnt,
+            (querySnapshot) => {
+                const updatedGroceryItems = querySnapshot.docs.map(docSnapshot => {
+                    let data = docSnapshot.data();
+                    data.id = docSnapshot.id;
+                    return data
+                });
+                setPopularCards(updatedGroceryItems);
+                setLoading(false);
+            },
+            (error) => console.log(error)
+        );
+    }, [limitCnt, setPopularCards, setLoading]);
 
     return (
         <section className="section blog">

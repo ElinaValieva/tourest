@@ -1,6 +1,4 @@
 import {useEffect, useState} from "react";
-import {collection, onSnapshot, limit, orderBy, query} from 'firebase/firestore';
-import db from '../firebase';
 import {Link} from "react-router-dom";
 import {
     Box,
@@ -10,6 +8,7 @@ import {
     LinearProgress,
     Typography
 } from "@mui/material";
+import {getDestinations} from "../service/firestore";
 
 const Countries = ({countries}) => (
     <Grid container spacing={2}>
@@ -55,35 +54,26 @@ const Countries = ({countries}) => (
 )
 
 export function Destination() {
-    const collectionRef = collection(db, 'destination');
     const [destinations, setDestinations] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const q = query(
-            collectionRef,
-            orderBy('id', 'asc'),
-            limit(5)
-        );
-
         setLoading(true);
-        const unsub = onSnapshot(q, (querySnapshot) => {
-            const items = [];
-            let index = 0
-            querySnapshot.forEach((doc) => {
-                let data = doc.data();
-                data.space = index <= 1 ? 6 : 4
-                items.push(data);
-                index++
-            });
-            setDestinations(items);
-            setLoading(false);
-        });
-        return () => {
-            unsub();
-        };
-
-    }, []);
+        return getDestinations(
+            (querySnapshot) => {
+                let index = 0
+                const updatedGroceryItems = querySnapshot.docs.map(docSnapshot => {
+                    let data = docSnapshot.data();
+                    data.space = index <= 1 ? 6 : 4
+                    index++
+                    return data
+                });
+                setDestinations(updatedGroceryItems);
+                setLoading(false);
+            },
+            (error) => console.log(error)
+        );
+    }, [setDestinations, setLoading]);
 
     return (
         <section className="section destination">

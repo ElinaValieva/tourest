@@ -66,25 +66,11 @@ export class Footer extends Component {
                         </p>
 
                         <ul className="social-list">
-                            <li>
-                                <a href="#" className="social-link"><BsFacebook/></a>
-                            </li>
-
-                            <li>
-                                <a href="#" className="social-link"><BsTwitter/></a>
-                            </li>
-
-                            <li>
-                                <a href="#" className="social-link"><BsInstagram/></a>
-                            </li>
-
-                            <li>
-                                <a href="#" className="social-link"><BsLinkedin/></a>
-                            </li>
-
-                            <li>
-                                <a href="#" className="social-link"><BsGoogle/></a>
-                            </li>
+                            <li className="social-link"><BsFacebook/></li>
+                            <li className="social-link"><BsTwitter/></li>
+                            <li className="social-link"><BsInstagram/></li>
+                            <li className="social-link"><BsLinkedin/></li>
+                            <li className="social-link"><BsGoogle/></li>
                         </ul>
                     </div>
                 </div>

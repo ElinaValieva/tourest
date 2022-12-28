@@ -1,33 +1,12 @@
 import React, {useState} from "react";
-import {collection, doc, addDoc} from 'firebase/firestore';
-import db from '../firebase';
 import {v4 as uuidv4} from 'uuid';
 import {useHistory} from "react-router-dom"
-import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {Button, Container, TextField} from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import {CodeBlock} from "./Tour";
-
-function DateUtil() {
-    let date = new Date();
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    Date.prototype.formatTime = function () {
-        let hours = this.getHours();
-        let minutes = this.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        return hours + ':' + minutes + ' ' + ampm;
-    }
-
-    Date.prototype.formatDay = function () {
-        return this.getDay() + ' ' + monthNames[this.getMonth()] + ' ' + this.getFullYear();
-    }
-    return date;
-}
+import {DateUtil} from "../service/utils";
+import {CodeBlock} from "./CodeBlock";
+import {addPost, uploadImage} from "../service/firestore";
 
 export function NewTour() {
 
@@ -37,7 +16,6 @@ export function NewTour() {
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(true);
-    const [id, setId] = useState(null)
     const [preview, setPreview] = useState(false)
     let navigate = useHistory()
 
@@ -49,29 +27,23 @@ export function NewTour() {
         }
     }
 
-    const storage = getStorage()
-    const collectionRef = collection(db, 'tourest');
-
-    async function createPost(url) {
+    function createPost(url) {
         let date = DateUtil();
 
-        const textDetail = {
-            id: date.getMilliseconds(),
-            uuid: uuidv4(),
-            author: 'Jony Bristow',
-            published: `${date.formatDay()}  ${date.formatTime()}`,
-            source: url,
-            city: 'Malé',
-            country: 'Nepal',
-            title: title,
-            text: text
-        }
-
         try {
-            await addDoc(collectionRef, textDetail).then((res) => {
-                setId(res.id)
+            addPost({
+                id: date.getMilliseconds(),
+                uuid: uuidv4(),
+                author: 'Jony Bristow',
+                published: `${date.formatDay()}  ${date.formatTime()}`,
+                source: url,
+                city: 'Malé',
+                country: 'Nepal',
+                title: title,
+                text: text
+            }).then((res) => {
                 setLoading(false);
-                navigate.push(`/${id}`)
+                navigate.push(`/${res.id}`)
             });
         } catch (error) {
             console.error(error);
@@ -79,23 +51,11 @@ export function NewTour() {
     }
 
     function createPostWithSource() {
-        const storageRef = ref(storage, `/files/${image.name}`)
-        const uploadTask = uploadBytesResumable(storageRef, image);
         setLoading(true)
 
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                console.log(percent);
-            },
-            (err) => console.log(err),
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    createPost(url).then((e) => console.log(e))
-                });
-            }
-        );
+        uploadImage(image).then((url) => {
+            createPost(url)
+        });
     }
 
     return (
@@ -134,7 +94,7 @@ export function NewTour() {
                         ?
                         <ReactMarkdown className="markdown-text"
                                        remarkPlugins={[remarkGfm]}
-                                       renderers={{code: CodeBlock}}>{text.replaceAll('<br/>', "\n")}</ReactMarkdown>
+                                       renderers={{code: CodeBlock}}>{text.formatSpacesAsText()}</ReactMarkdown>
                         :
                         <TextField
                             defaultValue={text}
@@ -143,7 +103,7 @@ export function NewTour() {
                             multiline
                             minRows={4}
                             variant="standard"
-                            onChange={(e) => setText(e.target.value.replace(/(?:\r\n|\r|\n)/g, '<br/>'))}
+                            onChange={(e) => setText(e.target.value.formatSpacesAsHtml())}
                         />
                     }
                 </div>
