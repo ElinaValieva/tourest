@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Avatar, Box, Card, CardContent, CardHeader, CardMedia, Grid, LinearProgress, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
-import {getPosts} from "../service/firestore";
+import {FirebaseService} from "../service/firestore";
 
 const BlogCard = ({cards}) => (
     <Grid container spacing={2}>
@@ -50,18 +50,12 @@ export function Blog({limitCnt}) {
 
     useEffect(() => {
         setLoading(true);
-        return getPosts(limitCnt,
-            (querySnapshot) => {
-                const updatedGroceryItems = querySnapshot.docs.map(docSnapshot => {
-                    let data = docSnapshot.data();
-                    data.id = docSnapshot.id;
-                    return data
-                });
-                setPopularCards(updatedGroceryItems);
-                setLoading(false);
-            },
-            (error) => console.log(error)
-        );
+        FirebaseService.getPosts(limitCnt)
+            .then((posts) => {
+                setPopularCards(posts)
+                setLoading(false)
+            })
+
     }, [limitCnt, setPopularCards, setLoading]);
 
     return (

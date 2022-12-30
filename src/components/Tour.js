@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm';
 import {CodeBlock} from "./CodeBlock";
-import {getPostById} from "../service/firestore"
+import {FirebaseService} from "../service/firestore"
 
 export function Tour() {
     let {id} = useParams();
@@ -16,7 +16,7 @@ export function Tour() {
 
     useEffect(() => {
         setLoading(true);
-        getPostById(id).then(item => {
+        FirebaseService.getPostById(id).then(item => {
             setText(item.text);
             setTitle(item.title);
             setImage(item.source)

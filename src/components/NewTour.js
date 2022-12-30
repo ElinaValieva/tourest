@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {DateUtil} from "../service/utils";
 import {CodeBlock} from "./CodeBlock";
-import {addPost, uploadImage} from "../service/firestore";
+import {FirebaseService} from "../service/firestore";
 
 export function NewTour() {
 
@@ -31,7 +31,7 @@ export function NewTour() {
         let date = DateUtil();
 
         try {
-            addPost({
+            FirebaseService.addPost({
                 id: date.getMilliseconds(),
                 uuid: uuidv4(),
                 author: 'Jony Bristow',
@@ -53,9 +53,10 @@ export function NewTour() {
     function createPostWithSource() {
         setLoading(true)
 
-        uploadImage(image).then((url) => {
-            createPost(url)
-        });
+        FirebaseService.uploadImage(image)
+            .then((url) => {
+                createPost(url)
+            });
     }
 
     return (

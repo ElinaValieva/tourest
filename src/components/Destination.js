@@ -8,7 +8,7 @@ import {
     LinearProgress,
     Typography
 } from "@mui/material";
-import {getDestinations} from "../service/firestore";
+import {FirebaseService} from "../service/firestore";
 
 const Countries = ({countries}) => (
     <Grid container spacing={2}>
@@ -59,20 +59,10 @@ export function Destination() {
 
     useEffect(() => {
         setLoading(true);
-        return getDestinations(
-            (querySnapshot) => {
-                let index = 0
-                const updatedGroceryItems = querySnapshot.docs.map(docSnapshot => {
-                    let data = docSnapshot.data();
-                    data.space = index <= 1 ? 6 : 4
-                    index++
-                    return data
-                });
-                setDestinations(updatedGroceryItems);
-                setLoading(false);
-            },
-            (error) => console.log(error)
-        );
+        FirebaseService.getDestinations(3).then(destinations => {
+            setDestinations(destinations);
+            setLoading(false);
+        });
     }, [setDestinations, setLoading]);
 
     return (
