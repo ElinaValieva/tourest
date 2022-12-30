@@ -1,7 +1,7 @@
 import {addDoc, collection, doc, getDoc, getFirestore, limit, onSnapshot, orderBy, query} from "firebase/firestore";
 import {initializeApp} from "firebase/app";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
-import axios from 'axios';
+import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -17,6 +17,8 @@ console.debug(firebaseConfig)
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage();
+const auth = getAuth(app);
+
 
 function getPosts(db, limitCnt, snapshot, error) {
     const itemsColRef = collection(db, 'tourest')
@@ -37,6 +39,11 @@ export const FirebaseService = {
     },
 
     addPost: async function (data) {
+        if (!localStorage.getItem('name')) {
+            signWithGoogle()
+        }
+        data.author = localStorage.getItem('name')
+        data.photo = localStorage.getItem('photo')
         return await addDoc(collection(db, 'tourest'), data);
     },
 
@@ -82,4 +89,13 @@ export const FirebaseService = {
             return getDownloadURL(r.ref)
         });
     }
+}
+
+const provider = new GoogleAuthProvider();
+
+export const signWithGoogle = () => {
+    signInWithPopup(auth, provider).then((result) => {
+        localStorage.setItem('photo', result.user.photoURL)
+        localStorage.setItem('name', result.user.displayName)
+    }).catch((error) => console.log(error))
 }

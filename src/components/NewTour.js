@@ -34,7 +34,8 @@ export function NewTour() {
             FirebaseService.addPost({
                 id: date.getMilliseconds(),
                 uuid: uuidv4(),
-                author: 'Jony Bristow',
+                photo: localStorage.getItem('photo'),
+                author: localStorage.getItem('name'),
                 published: `${date.formatDay()}  ${date.formatTime()}`,
                 source: url,
                 city: 'Malé',

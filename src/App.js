@@ -4,7 +4,7 @@ import {Banner} from "./components/Banner";
 import {Destination} from "./components/Destination";
 import {About} from "./components/About";
 import {Footer} from "./components/Footer";
-import {Blog, Child} from "./components/Blog";
+import {Blog} from "./components/Blog";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {NewTour} from "./components/NewTour";
 import {createTheme, responsiveFontSizes, ThemeProvider} from "@mui/material";
