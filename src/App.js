@@ -47,7 +47,7 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     <Banner/>
-                                    <Destination/>
+                                    <Destination cntItems={5}/>
                                     <About/>
                                     <Blog limitCnt={3}/>
                                     <Footer/>

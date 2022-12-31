@@ -53,17 +53,24 @@ const Countries = ({countries}) => (
     </Grid>
 )
 
-export function Destination() {
+export function Destination({cntItems}) {
     const [destinations, setDestinations] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+    const fetchData = () => {
         setLoading(true);
-        FirebaseService.getDestinations(3).then(destinations => {
+        FirebaseService.getDestinations(cntItems).then(destinations => {
             setDestinations(destinations);
             setLoading(false);
+        }).catch((err) => {
+            setLoading(false);
+            console.error(err)
         });
-    }, [setDestinations, setLoading]);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <section className="section destination">

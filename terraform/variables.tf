@@ -21,7 +21,7 @@ variable "GITHUB_ACCOUNT" {
 
 variable "GITHUB_PROJECT_NAME" {
   description = "Github Project Name"
-  default     = "tourest"
+  default     = "tourest_gcp"
   type        = string
 }
 

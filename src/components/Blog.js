@@ -49,14 +49,21 @@ export function Blog({limitCnt}) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
         setLoading(true);
         FirebaseService.getPosts(limitCnt)
             .then((posts) => {
                 setPopularCards(posts)
                 setLoading(false)
             })
-
-    }, [limitCnt, setPopularCards, setLoading]);
+            .catch((err) => {
+                setLoading(false)
+                console.error(err)
+            })
+    }
 
     return (
         <section className="section blog">

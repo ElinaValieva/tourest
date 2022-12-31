@@ -12,13 +12,10 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
-console.debug(firebaseConfig)
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage();
 const auth = getAuth(app);
-
 
 function getPosts(db, limitCnt, snapshot, error) {
     const itemsColRef = collection(db, 'tourest')
@@ -33,9 +30,19 @@ function getDestinations(db, limitCnt, snapshot, error) {
 }
 
 export const FirebaseService = {
+
     getPostById: async function (id) {
-        const querySnapshot = await getDoc(doc(db, 'tourest', id));
-        return querySnapshot.data();
+        let cachedItem = localStorage.getItem(id);
+        if (cachedItem) {
+            console.log('Fetching data from cache')
+            return JSON.parse(cachedItem)
+        } else {
+            console.log('Fetching data from firebase')
+            const querySnapshot = await getDoc(doc(db, 'tourest', id));
+            let fetchedItem = querySnapshot.data();
+            localStorage.setItem(id, JSON.stringify(fetchedItem))
+            return fetchedItem;
+        }
     },
 
     addPost: async function (data) {
@@ -44,43 +51,56 @@ export const FirebaseService = {
         }
         data.author = localStorage.getItem('name')
         data.photo = localStorage.getItem('photo')
+        localStorage.removeItem('posts')
         return await addDoc(collection(db, 'tourest'), data);
     },
 
     getPosts: function (limitCnt) {
-        return new Promise((resolve, reject) => getPosts(db, limitCnt,
-            (querySnapshot) => {
-                const updatedGroceryItems = querySnapshot.docs.map(docSnapshot => {
-                    let data = docSnapshot.data();
-                    data.id = docSnapshot.id;
-                    return data
-                });
-                resolve(updatedGroceryItems)
-            },
-            (error) => {
-                console.log(error)
-                reject(error)
-            }
-        ));
+        let cachedItems = localStorage.getItem(`posts${limitCnt}`);
+        if (cachedItems) {
+            return Promise.resolve(JSON.parse(cachedItems))
+        } else {
+            return new Promise((resolve, reject) => getPosts(db, limitCnt,
+                (querySnapshot) => {
+                    const fetchedItems = querySnapshot.docs.map(docSnapshot => {
+                        let data = docSnapshot.data();
+                        data.id = docSnapshot.id;
+                        return data
+                    });
+                    localStorage.setItem(`posts${limitCnt}`, JSON.stringify(fetchedItems))
+                    resolve(fetchedItems)
+                },
+                (error) => {
+                    console.log(error)
+                    reject(error)
+                }
+            ));
+        }
     },
 
     getDestinations: function (limitCnt) {
-        return new Promise((resolve, reject) => getDestinations(db, limitCnt,
-            (querySnapshot) => {
-                let index = 0
-                const updatedGroceryItems = querySnapshot.docs.map(docSnapshot => {
-                    let data = docSnapshot.data();
-                    data.space = index <= 1 ? 6 : 4
-                    index++
-                    return data
-                });
-                resolve(updatedGroceryItems)
-            },
-            (error) => {
-                console.log(error)
-                reject(error)
-            }
-        ));
+        let items = localStorage.getItem('destinations');
+        if (items) {
+            return Promise.resolve(JSON.parse(items))
+        } else {
+            return new Promise((resolve, reject) => getDestinations(db, limitCnt,
+                (querySnapshot) => {
+                    let index = 0
+                    const fetchedItems = querySnapshot.docs.map(docSnapshot => {
+                        let data = docSnapshot.data();
+                        data.space = index <= 1 ? 6 : 4
+                        index++
+                        return data
+                    });
+                    localStorage.setItem('destinations', JSON.stringify(fetchedItems))
+                    resolve(fetchedItems)
+                },
+                (error) => {
+                    console.log(error)
+                    reject(error)
+                }
+            ));
+        }
     },
 
     uploadImage: function (image) {
