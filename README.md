@@ -1,7 +1,7 @@
 # Tourest app
-> A reference project to deploy a React app onto Google Cloud Run, Cloud Build as the CI/CD tool, and Cloud Firebase Web for authentication, storage, database.
+> A reference project to deploy a React app onto Google Cloud Run, Cloud Build as the CI/CD tool, and Cloud Firebase Web for authentication, storage, database, hosting.
 
-[Example](https://tourest-rkgp7pbgmq-uc.a.run.app/)
+[Example](https://gcp-playground-06071995.web.app/)
 
 ![GCP Architecture](public/assets/images/gcp.drawio.png)
 

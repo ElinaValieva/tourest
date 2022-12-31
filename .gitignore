@@ -39,3 +39,7 @@ terraform.rc
 
 # Ignore .env file from local run
 *.env
+
+# Firebase temp files
+.firebase/
+.firebaserc/
