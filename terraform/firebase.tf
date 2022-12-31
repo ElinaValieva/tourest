@@ -24,7 +24,7 @@ resource "google_firebase_project_location" "default" {
   ]
 }
 
-resource "google_firebase_web_app" "wild_workouts" {
+resource "google_firebase_web_app" "firebase_web_app" {
   provider     = google-beta
   display_name = lower(var.GITHUB_PROJECT_NAME)
 
@@ -33,7 +33,7 @@ resource "google_firebase_web_app" "wild_workouts" {
 
 data "google_firebase_web_app_config" "basic" {
   provider   = google-beta
-  web_app_id = google_firebase_web_app.wild_workouts.app_id
+  web_app_id = google_firebase_web_app.firebase_web_app.app_id
 }
 
 resource "google_firebaserules_release" "default" {

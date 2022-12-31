@@ -17,7 +17,7 @@ resource "google_cloudbuild_trigger" "cloud-build-trigger" {
     _IMAGE                        = var.GITHUB_PROJECT_NAME
     _REGION                       = var.REGION
     _FIREBASE_API_KEY             = data.google_firebase_web_app_config.basic.api_key
-    _FIREBASE_APP_ID              = google_firebase_web_app.wild_workouts.app_id
+    _FIREBASE_APP_ID              = google_firebase_web_app.firebase_web_app.app_id
     _FIREBASE_AUTH_DOMAIN         = data.google_firebase_web_app_config.basic.auth_domain
     _FIREBASE_STORAGE_BUCKET      = lookup(data.google_firebase_web_app_config.basic, "storage_bucket", "")
     _FIREBASE_MESSAGING_SENDER_ID = lookup(data.google_firebase_web_app_config.basic, "messaging_sender_id", "")
