@@ -8,6 +8,12 @@ resource "google_project_iam_member" "service_account_firebase_admin" {
   member  = "serviceAccount:${google_service_account.firebase.email}"
 }
 
+resource "google_project_iam_member" "service_account_firebase_rules" {
+  project = var.PROJECT_ID
+  role    = "roles/firebaserules.admin"
+  member  = "serviceAccount:${google_service_account.firebase.email}"
+}
+
 resource "google_project_iam_member" "service_account_storage_admin" {
   project = var.PROJECT_ID
   role    = "roles/storage.admin"

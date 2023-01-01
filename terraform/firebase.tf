@@ -58,5 +58,8 @@ resource "google_firebaserules_ruleset" "basic" {
   }
 
   project    = var.PROJECT_ID
-  depends_on = [google_firebase_project.default]
+  depends_on = [
+    google_firebase_project.default,
+    google_project_iam_member.service_account_firebase_rules
+  ]
 }
