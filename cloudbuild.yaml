@@ -21,6 +21,11 @@ steps:
             '--allow-unauthenticated',
             '--platform=managed',
             '--image=gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA' ]
+            
+  - id: 'npm build'
+    name: node:18-alpine
+    entrypoint: npm
+    args: [ 'run', 'build', '--prod' ]
 
   - id: 'firebase hosting'
     name: 'gcr.io/${_PROJECT}/firebase'
