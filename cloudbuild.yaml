@@ -22,6 +22,11 @@ steps:
             '--platform=managed',
             '--image=gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA' ]
             
+  - id: 'npm install'
+    name: node:18-alpine
+    entrypoint: npm
+    args: [ 'install' ]
+            
   - id: 'npm build'
     name: node:18-alpine
     entrypoint: npm
