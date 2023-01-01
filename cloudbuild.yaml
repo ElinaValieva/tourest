@@ -21,3 +21,7 @@ steps:
             '--allow-unauthenticated',
             '--platform=managed',
             '--image=gcr.io/${_PROJECT}/github.com/${_ACCOUNT}/${_IMAGE}:$SHORT_SHA' ]
+
+  - id: 'firebase hosting'
+    name: 'gcr.io/cloud-builders/firebase'
+    args: [ 'deploy', '--project=${_PROJECT}', '--only=hosting' ]
