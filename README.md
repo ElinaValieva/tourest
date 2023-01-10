@@ -1,6 +1,8 @@
 # Tourest app
 > A reference project to deploy a React app onto Google Cloud Run, Cloud Build as the CI/CD tool, and Cloud Firebase Web for authentication, storage, database, hosting.
 
+**Read more:** [medium.com/google-cloud](https://medium.com/google-cloud/getting-started-react-app-with-firebase-web-and-cloud-run-in-gcp-3299bf1c92e0)
+
 ![GCP Architecture](public/assets/images/gcp.drawio.png)
 
 ## Prerequisites :heavy_exclamation_mark:
